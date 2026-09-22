@@ -1,0 +1,26 @@
+{
+  "sourceLanguage": "ru",
+  "strings": {
+    "CFBundleDisplayName": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Obmer"
+          }
+        }
+      }
+    },
+    "NSCameraUsageDescription": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The camera is needed to scan the room and build a measured plan. Footage is processed on your device and never sent anywhere."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

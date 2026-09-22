@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1009" height="768" viewBox="0 0 1009 768">
+<rect width="1009" height="768" fill="#F2F4F1"/>
+<g font-family="Helvetica Neue,Helvetica,Arial">
+<line x1="110.0" y1="110.0" x2="899.5" y2="110.0" stroke="#14201C" stroke-width="10" stroke-linecap="round"/>
+<circle cx="504.8" cy="110.0" r="18" fill="#0A6A55"/>
+<text x="504.8" y="116.0" fill="#fff" font-size="18" font-weight="700" text-anchor="middle">1</text>
+<text x="504.8" y="153.0" fill="#0A6A55" font-size="17" font-weight="700" text-anchor="middle">4268</text>
+<line x1="709.5" y1="401.0" x2="110.0" y2="401.0" stroke="#14201C" stroke-width="10" stroke-linecap="round"/>
+<circle cx="409.8" cy="401.0" r="18" fill="#0A6A55"/>
+<text x="409.8" y="407.0" fill="#fff" font-size="18" font-weight="700" text-anchor="middle">2</text>
+<text x="409.8" y="368.0" fill="#0A6A55" font-size="17" font-weight="700" text-anchor="middle">3241</text>
+<line x1="899.5" y1="110.0" x2="899.5" y2="658.7" stroke="#14201C" stroke-width="10" stroke-linecap="round"/>
+<circle cx="899.5" cy="384.3" r="18" fill="#0A6A55"/>
+<text x="899.5" y="390.3" fill="#fff" font-size="18" font-weight="700" text-anchor="middle">3</text>
+<text x="861.5" y="389.3" fill="#0A6A55" font-size="17" font-weight="700" text-anchor="middle">2966</text>
+<line x1="709.5" y1="658.7" x2="709.5" y2="401.0" stroke="#14201C" stroke-width="10" stroke-linecap="round"/>
+<circle cx="709.5" cy="529.8" r="18" fill="#0A6A55"/>
+<text x="709.5" y="535.8" fill="#fff" font-size="18" font-weight="700" text-anchor="middle">4</text>
+<text x="747.5" y="534.8" fill="#0A6A55" font-size="17" font-weight="700" text-anchor="middle">1393</text>
+<line x1="110.0" y1="401.0" x2="110.0" y2="110.0" stroke="#14201C" stroke-width="10" stroke-linecap="round"/>
+<circle cx="110.0" cy="255.5" r="18" fill="#0A6A55"/>
+<text x="110.0" y="261.5" fill="#fff" font-size="18" font-weight="700" text-anchor="middle">5</text>
+<text x="148.0" y="260.5" fill="#0A6A55" font-size="17" font-weight="700" text-anchor="middle">1573</text>
+<line x1="899.5" y1="658.7" x2="709.5" y2="658.7" stroke="#14201C" stroke-width="10" stroke-linecap="round"/>
+<circle cx="804.5" cy="658.7" r="18" fill="#0A6A55"/>
+<text x="804.5" y="664.7" fill="#fff" font-size="18" font-weight="700" text-anchor="middle">6</text>
+<text x="804.5" y="625.7" fill="#0A6A55" font-size="17" font-weight="700" text-anchor="middle">1027</text>
+<line x1="710.6" y1="110.0" x2="710.6" y2="184.2" stroke="#14201C" stroke-width="10" stroke-linecap="round"/>
+<circle cx="710.6" cy="147.1" r="18" fill="#0A6A55"/>
+<text x="710.6" y="153.1" fill="#fff" font-size="18" font-weight="700" text-anchor="middle">7</text>
+<text x="672.6" y="152.1" fill="#0A6A55" font-size="17" font-weight="700" text-anchor="middle">401</text>
+<rect x="883.5" y="548.4" width="32" height="32" rx="6" fill="#A4600C"/>
+<text x="899.5" y="570.4" fill="#fff" font-size="15" font-weight="700" text-anchor="middle">Д1</text>
+<text x="899.5" y="600.4" fill="#A4600C" font-size="16" font-weight="700" text-anchor="middle">622</text>
+<rect x="883.5" y="237.9" width="32" height="32" rx="6" fill="#A4600C"/>
+<text x="899.5" y="259.9" fill="#fff" font-size="15" font-weight="700" text-anchor="middle">Д2</text>
+<text x="899.5" y="289.9" fill="#A4600C" font-size="16" font-weight="700" text-anchor="middle">563</text>
+<rect x="363.6" y="94.0" width="32" height="32" rx="6" fill="#A4600C"/>
+<text x="379.6" y="116.0" fill="#fff" font-size="15" font-weight="700" text-anchor="middle">Д3</text>
+<text x="379.6" y="146.0" fill="#A4600C" font-size="16" font-weight="700" text-anchor="middle">895</text>
+<rect x="94.0" y="291.1" width="32" height="32" rx="6" fill="#A4600C"/>
+<text x="110.0" y="313.1" fill="#fff" font-size="15" font-weight="700" text-anchor="middle">Д4</text>
+<text x="110.0" y="343.1" fill="#A4600C" font-size="16" font-weight="700" text-anchor="middle">852</text>
+<rect x="370.3" y="385.0" width="32" height="32" rx="6" fill="#A4600C"/>
+<text x="386.3" y="407.0" fill="#fff" font-size="15" font-weight="700" text-anchor="middle">Д5</text>
+<text x="386.3" y="437.0" fill="#A4600C" font-size="16" font-weight="700" text-anchor="middle">760</text>
+<rect x="787.4" y="642.7" width="32" height="32" rx="6" fill="#A4600C"/>
+<text x="803.4" y="664.7" fill="#fff" font-size="15" font-weight="700" text-anchor="middle">Д6</text>
+<text x="803.4" y="694.7" fill="#A4600C" font-size="16" font-weight="700" text-anchor="middle">784</text>
+<circle cx="805.1" cy="157.6" r="11" fill="none" stroke="#7C8B85" stroke-width="2.5" stroke-dasharray="5 4"/>
+<text x="805.1" y="138.6" fill="#7C8B85" font-size="15" text-anchor="middle">шкаф</text>
+<circle cx="186.9" cy="165.9" r="11" fill="none" stroke="#7C8B85" stroke-width="2.5" stroke-dasharray="5 4"/>
+<text x="186.9" y="146.9" fill="#7C8B85" font-size="15" text-anchor="middle">шкаф</text>
+<circle cx="410.7" cy="265.2" r="11" fill="none" stroke="#7C8B85" stroke-width="2.5" stroke-dasharray="5 4"/>
+<text x="410.7" y="246.2" fill="#7C8B85" font-size="15" text-anchor="middle">стул</text>
+<text x="110" y="46" fill="#14201C" font-size="21" font-weight="700">Коридор — план по скану 23:07</text>
+<text x="110" y="734" fill="#4A5A55" font-size="16">Все размеры в миллиметрах. Зелёным — стены, оранжевым — двери. Высота потолка 2653 мм.</text>
+</g></svg>

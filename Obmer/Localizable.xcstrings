@@ -1,0 +1,456 @@
+{
+  "sourceLanguage": "ru",
+  "strings": {
+    "Обмер": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Measure"
+          }
+        }
+      }
+    },
+    "Обмер помещения": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Measure a room"
+          }
+        }
+      }
+    },
+    "Обойдите комнату по периметру, направляя камеру на стены. Приложение построит стены, двери и окна с размерами.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Walk the room, pointing the camera at the walls. The app builds walls, doors and windows with dimensions."
+          }
+        }
+      }
+    },
+    "Начать сканирование": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start scanning"
+          }
+        }
+      }
+    },
+    "Снимите шторы с окон и по возможности отодвиньте мебель от стен — закрытые участки приложение достроит предположением.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open the curtains and pull furniture away from the walls where you can — anything hidden is filled in by guesswork."
+          }
+        }
+      }
+    },
+    "Устройство не поддерживается": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Device not supported"
+          }
+        }
+      }
+    },
+    "Для сканирования нужен LiDAR — он есть в iPhone Pro (12 Pro и новее) и iPad Pro с 2020 года.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scanning needs LiDAR, found on iPhone Pro (12 Pro and later) and iPad Pro from 2020."
+          }
+        }
+      }
+    },
+    "Обойдите комнату по периметру": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Walk the room"
+          }
+        }
+      }
+    },
+    "Считаю модель…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Building the model…"
+          }
+        }
+      }
+    },
+    "Отмена": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        }
+      }
+    },
+    "Готово": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "Результат": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Result"
+          }
+        }
+      }
+    },
+    "Помещение": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Room"
+          }
+        }
+      }
+    },
+    "Периметр": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Perimeter"
+          }
+        }
+      }
+    },
+    "Высота потолка": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ceiling height"
+          }
+        }
+      }
+    },
+    "Габаритная площадь": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bounding area"
+          }
+        }
+      }
+    },
+    "%lld мм": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld mm"
+          }
+        }
+      }
+    },
+    "%.2f м²": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%.2f m²"
+          }
+        }
+      }
+    },
+    "%lld элем. измерены с низкой достоверностью — проверьте их вручную перед использованием.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld items were measured with low confidence — check them by hand before you rely on them."
+          }
+        }
+      }
+    },
+    "Стены — %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Walls — %lld"
+          }
+        }
+      }
+    },
+    "Проёмы — %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Openings — %lld"
+          }
+        }
+      }
+    },
+    "Экспорт": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export"
+          }
+        }
+      }
+    },
+    "Модель USDZ (параметрическая)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "USDZ model (parametric)"
+          }
+        }
+      }
+    },
+    "Размеры JSON": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dimensions as JSON"
+          }
+        }
+      }
+    },
+    "Не удалось сохранить файл: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not save the file: %@"
+          }
+        }
+      }
+    },
+    "Габаритная площадь считается по описанному прямоугольнику и для непрямоугольных комнат завышена. Точный контур появится вместе с уточнением размеров.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bounding area is taken across the room's outer rectangle, so it runs high for rooms that are not rectangular. An exact outline arrives with dimension refinement."
+          }
+        }
+      }
+    },
+    "достоверность: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "confidence: %@"
+          }
+        }
+      }
+    },
+    "Стена %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wall %lld"
+          }
+        }
+      }
+    },
+    "%lld × %lld мм": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld × %lld mm"
+          }
+        }
+      }
+    },
+    "Стена": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wall"
+          }
+        }
+      }
+    },
+    "Дверь": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Door"
+          }
+        }
+      }
+    },
+    "Окно": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Window"
+          }
+        }
+      }
+    },
+    "Проём": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opening"
+          }
+        }
+      }
+    },
+    "Пол": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Floor"
+          }
+        }
+      }
+    },
+    "Элемент": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Item"
+          }
+        }
+      }
+    },
+    "высокая": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "high"
+          }
+        }
+      }
+    },
+    "средняя": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "medium"
+          }
+        }
+      }
+    },
+    "низкая": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "low"
+          }
+        }
+      }
+    },
+    "Найдено стен: %lld. У замкнутой комнаты их обычно не меньше четырёх — обход не завершён.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Walls found: %lld. A closed room normally has at least four — the walkaround is unfinished."
+          }
+        }
+      }
+    },
+    "Высота потолка %lld мм неправдоподобно мала — верх стен не попал в скан.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A ceiling height of %lld mm is implausibly low — the tops of the walls were missed."
+          }
+        }
+      }
+    },
+    "Высота потолка %lld мм неправдоподобно велика — вероятно, склеились два уровня.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A ceiling height of %lld mm is implausibly high — two levels were probably merged."
+          }
+        }
+      }
+    },
+    "Коротких стен, меньше 400 мм: %lld. Обычно это обрывки, а не настоящие стены.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Walls shorter than 400 mm: %lld. These are usually fragments, not real walls."
+          }
+        }
+      }
+    },
+    "Контур не замкнут: суммарная длина стен заметно меньше периметра помещения.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The outline is open: the walls together fall well short of the room's perimeter."
+          }
+        }
+      }
+    },
+    "Обмер похож на незавершённый": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This survey looks unfinished"
+          }
+        }
+      }
+    },
+    "Размеры ниже показаны как есть, но полагаться на них нельзя. Просканируйте помещение целиком: обойдите по периметру и ведите камерой по стенам снизу вверх.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The dimensions below are shown as measured, but do not rely on them. Scan the whole room: walk the perimeter and sweep the camera up each wall."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

@@ -9,9 +9,12 @@ struct ResultsView: View {
     @State private var usdzURL: URL?
     @State private var jsonURL: URL?
     @State private var objURL: URL?
+    @State private var correctionsURL: URL?
     @State private var exportError: String?
     @State private var isToppingUp = false
     @State private var isMeasuring = false
+    @State private var refining: MeasuredItem?
+    @State private var target: MeasureTarget?
 
     private var summary: RoomSummary { RoomSummary(room: room, mesh: mesh) }
 
@@ -70,8 +73,8 @@ struct ResultsView: View {
                 } header: {
                     Text("Проёмы — \(summary.openings.count)")
                 } footer: {
-                    if summary.openings.contains(where: { $0.byMesh != nil }) {
-                        Text("Верхняя строка — размер от RoomPlan, нижняя — по сырому мешу лидара. RoomPlan обрубает края проёма, лидар обводит его целиком. Сверьте обе с рулеткой.")
+                    if summary.openings.contains(where: { $0.offsets != nil }) {
+                        Text("«От углов» — расстояния от концов стены до краёв проёма. Считаются автоматически: углы строит солвер стен, положение проёма даёт RoomPlan. Вместе с шириной они должны сойтись с длиной стены.")
                     }
                 }
             }
@@ -109,6 +112,11 @@ struct ResultsView: View {
                         Label("Сырой меш OBJ", systemImage: "cube.transparent")
                     }
                 }
+                if let correctionsURL {
+                    ShareLink(item: correctionsURL) {
+                        Label("Ручные уточнения", systemImage: "ruler")
+                    }
+                }
                 if let exportError {
                     Text(verbatim: exportError)
                         .font(.footnote)
@@ -130,7 +138,40 @@ struct ResultsView: View {
         .fullScreenCover(isPresented: $isMeasuring) {
             MeasureScreen(mesh: mesh) { isMeasuring = false }
         }
+        .fullScreenCover(item: $target) { chosen in
+            MeasureScreen(mesh: mesh, target: chosen) { target = nil }
+        }
+        .confirmationDialog(refining?.name ?? "", isPresented: .init(
+            get: { refining != nil },
+            set: { if !$0 { refining = nil } }
+        ), titleVisibility: .visible) {
+            if let item = refining {
+                Button("Уточнить ширину промером") {
+                    target = MeasureTarget(element: item.id, kind: .width,
+                                           title: String(localized: "\(item.name), ширина"))
+                    refining = nil
+                }
+                Button("Уточнить высоту промером") {
+                    target = MeasureTarget(element: item.id, kind: .height,
+                                           title: String(localized: "\(item.name), высота"))
+                    refining = nil
+                }
+                if item.isCorrected {
+                    Button("Убрать уточнение", role: .destructive) {
+                        CorrectionStore.shared.remove(for: item.id, .width)
+                        CorrectionStore.shared.remove(for: item.id, .height)
+                        refining = nil
+                    }
+                }
+                Button("Отмена", role: .cancel) { refining = nil }
+            }
+        } message: {
+            Text("Замер заменит размер этого элемента в обмере и в экспорте.")
+        }
         .onChange(of: mesh.revision) { _, _ in
+            Task { await export() }
+        }
+        .onChange(of: CorrectionStore.shared.items.count) { _, _ in
             Task { await export() }
         }
         .onDisappear { mesh.pause() }
@@ -220,6 +261,7 @@ struct ResultsView: View {
             if !mesh.isEmpty {
                 objURL = try Exporter.obj(mesh, name: name)
             }
+            correctionsURL = try Exporter.corrections(name: name)
         } catch {
             exportError = String(localized: "Не удалось сохранить файл: \(error.localizedDescription)")
         }
@@ -252,10 +294,19 @@ struct ResultsView: View {
     }
 
     private func measuredRow(_ item: MeasuredItem) -> some View {
+        Button { refining = item } label: { rowBody(item) }
+            .buttonStyle(.plain)
+    }
+
+    private func rowBody(_ item: MeasuredItem) -> some View {
         HStack(alignment: .firstTextBaseline) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(item.name)
-                if item.isApproximate {
+                if item.isCorrected {
+                    Text("уточнено вручную")
+                        .font(.caption2)
+                        .foregroundStyle(.green)
+                } else if item.isApproximate {
                     Text("приблизительно — лидар не построил, размер от RoomPlan")
                         .font(.caption2)
                         .foregroundStyle(.orange)
@@ -268,8 +319,15 @@ struct ResultsView: View {
             Spacer()
             VStack(alignment: .trailing, spacing: 2) {
                 Text(item.dimensions)
-                    .foregroundStyle(item.isApproximate ? .orange : .secondary)
+                    .foregroundStyle(item.isCorrected ? .green : (item.isApproximate ? .orange : .secondary))
                     .monospacedDigit()
+
+                if let offsets = item.offsets {
+                    Text(verbatim: offsets)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .monospacedDigit()
+                }
 
                 if let byMesh = item.byMesh {
                     Text("по лидару \(byMesh)")

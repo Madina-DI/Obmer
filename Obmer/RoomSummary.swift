@@ -12,12 +12,17 @@ struct MeasuredItem: Identifiable {
     /// показывается второй строкой: там расхождение ещё не сверено с рулеткой.
     /// Для стен меш стал основным размером и сюда не пишется.
     var byMesh: String? = nil
+    /// Размер уточнён вручную промером — он главнее всего остального.
+    var isCorrected = false
     /// Размер взят у RoomPlan, потому что меш его не дал. На контрольных
     /// обмерах RoomPlan мажет на 150–190 мм там, где лидар даёт 20, —
     /// такую строку нельзя показывать наравне с остальными.
     var isApproximate = false
     /// Насколько размер по мешу заслуживает доверия: доля обмеренной площади проёма.
     var meshCoverage: Double? = nil
+    /// Для проёма — сколько от углов стены до его краёв. Для планировки
+    /// это нужнее ширины: без него непонятно, где дверь стоит на стене.
+    var offsets: String? = nil
 }
 
 /// Разбирает CapturedRoom в человекочитаемые размеры.
@@ -43,7 +48,10 @@ struct RoomSummary {
     /// поэтому осмысленность результата приходится проверять самим.
     let completenessIssues: [String]
 
+    @MainActor
     init(room: CapturedRoom, mesh: MeshCapture? = nil) {
+        let corrections = CorrectionStore.shared
+
         var wallItems: [MeasuredItem] = []
         var lengths: [Float] = []
         var heights: [Float] = []
@@ -55,10 +63,11 @@ struct RoomSummary {
         if let mesh, !mesh.isEmpty {
             solution = WallSolver.solve(walls: room.walls, mesh: mesh)
         } else {
-            solution = WallSolver.Solution(lengths: [:],
+            solution = WallSolver.Solution(lengths: [:], placements: [:], angle: 0,
                                            report: .init(planesFound: 0, wallsMeasured: 0, unmeasured: []))
         }
         let byMesh = solution.lengths
+        let offsetsByOpening = OpeningOffsets.compute(for: room, solution: solution)
         let meshHeightMM = mesh?.profile()?.heightMM
 
         for (index, wall) in room.walls.enumerated() {
@@ -70,9 +79,18 @@ struct RoomSummary {
             // Длина по лидару — основной размер: на контрольном обмере
             // солвер давал 0–22 мм против 149–186 у RoomPlan.
             // Размер RoomPlan остаётся только как запасной, и с пометкой.
-            let ceilingMM = meshHeightMM ?? Self.mm(height)
+            let ceilingMM = corrections.value(for: wall.identifier, .height) ?? meshHeightMM ?? Self.mm(height)
             var item: MeasuredItem
-            if let solved = byMesh[wall.identifier] {
+            // Ручное уточнение старше всего: человек видел то, чего не видел прибор.
+            if let corrected = corrections.value(for: wall.identifier, .width) {
+                item = MeasuredItem(
+                    id: wall.identifier,
+                    name: String(localized: "Стена \(index + 1)"),
+                    dimensions: String(localized: "\(corrected) × \(ceilingMM) мм"),
+                    confidence: wall.confidence
+                )
+                item.isCorrected = true
+            } else if let solved = byMesh[wall.identifier] {
                 item = MeasuredItem(
                     id: wall.identifier,
                     name: String(localized: "Стена \(index + 1)"),
@@ -104,12 +122,20 @@ struct RoomSummary {
 
         var openingItems: [MeasuredItem] = []
         for surface in room.doors + room.windows + room.openings {
+            let width = corrections.value(for: surface.identifier, .width) ?? Self.mm(surface.dimensions.x)
+            let openingHeight = corrections.value(for: surface.identifier, .height) ?? Self.mm(surface.dimensions.y)
             var item = MeasuredItem(
                 id: surface.identifier,
                 name: Self.label(for: surface.category),
-                dimensions: String(localized: "\(Self.mm(surface.dimensions.x)) × \(Self.mm(surface.dimensions.y)) мм"),
+                dimensions: String(localized: "\(width) × \(openingHeight) мм"),
                 confidence: surface.confidence
             )
+            item.isCorrected = corrections.value(for: surface.identifier, .width) != nil
+                || corrections.value(for: surface.identifier, .height) != nil
+
+            if let placement = offsetsByOpening[surface.identifier] {
+                item.offsets = String(localized: "от углов: \(placement.beforeMM) и \(placement.afterMM) мм")
+            }
 
             // Проёмы — то, на чём RoomPlan промахивается сильнее всего,
             // поэтому по мешу пересчитываются в первую очередь именно они.

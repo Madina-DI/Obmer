@@ -52,10 +52,25 @@ enum WallSolver {
 
     struct Solution {
         let lengths: [UUID: Int]
+        let placements: [UUID: Placement]
+        /// Угол, на который развёрнут план помещения.
+        let angle: Float
         let report: Report
     }
 
-    private enum Family { case along, across }
+    /// Семейство параллельных стен. Стена «вдоль» имеет нормаль по оси u,
+    /// то есть сама тянется по оси v — и наоборот.
+    enum Family { case along, across }
+
+    /// Где стена стоит и докуда тянется, в развёрнутой по помещению системе.
+    /// Нужно, чтобы посчитать расстояния от углов до проёмов: для планировки
+    /// они важнее ширины проёма.
+    struct Placement {
+        let family: Family
+        let position: Float
+        let low: Float
+        let high: Float
+    }
 
     private struct Plane {
         let family: Family
@@ -76,7 +91,8 @@ enum WallSolver {
     /// У RoomPlan берётся только положение — какую плоскость с какой стеной
     /// сопоставить. Сам размер целиком из меша.
     static func solve(walls: [CapturedRoom.Surface], mesh: MeshCapture) -> Solution {
-        let empty = Solution(lengths: [:], report: Report(planesFound: 0, wallsMeasured: 0, unmeasured: []))
+        let empty = Solution(lengths: [:], placements: [:], angle: 0,
+                             report: Report(planesFound: 0, wallsMeasured: 0, unmeasured: []))
         guard !walls.isEmpty, !mesh.isEmpty else { return empty }
         guard let (faces, angle) = project(mesh) else { return empty }
 
@@ -84,22 +100,30 @@ enum WallSolver {
         let across = planes(of: .across, in: faces)
         guard !along.isEmpty, !across.isEmpty else { return empty }
 
-        var sizes: [(Family, Float, Int)] = []
+        var sizes: [(Family, Float, Int, Placement)] = []
         for plane in along {
-            if let length = extent(of: plane, crossing: across) { sizes.append((.along, plane.position, length)) }
+            if let span = extent(of: plane, crossing: across) {
+                sizes.append((.along, plane.position, span.length,
+                              Placement(family: .along, position: plane.position, low: span.low, high: span.high)))
+            }
         }
         for plane in across {
-            if let length = extent(of: plane, crossing: along) { sizes.append((.across, plane.position, length)) }
+            if let span = extent(of: plane, crossing: along) {
+                sizes.append((.across, plane.position, span.length,
+                              Placement(family: .across, position: plane.position, low: span.low, high: span.high)))
+            }
         }
         guard !sizes.isEmpty else {
-            return Solution(lengths: [:], report: Report(planesFound: along.count + across.count,
-                                                         wallsMeasured: 0, unmeasured: []))
+            return Solution(lengths: [:], placements: [:], angle: angle,
+                            report: Report(planesFound: along.count + across.count,
+                                           wallsMeasured: 0, unmeasured: []))
         }
 
         // Сопоставление с RoomPlan: у стены берём центр и направление,
         // переводим в ту же систему координат и ищем ближайшую плоскость.
         let cosine = cos(-angle), sine = sin(-angle)
         var result: [UUID: Int] = [:]
+        var placements: [UUID: Placement] = [:]
         var missed: [String] = []
         for (number, wall) in walls.enumerated() {
             let transform = wall.transform
@@ -129,10 +153,13 @@ enum WallSolver {
             guard let nearest = candidates.min(by: { abs($0.1 - position) < abs($1.1 - position) }),
                   abs(nearest.1 - position) < 0.30 else { missed.append(name); continue }
             result[wall.identifier] = nearest.2
+            placements[wall.identifier] = nearest.3
         }
 
         return Solution(
             lengths: result,
+            placements: placements,
+            angle: angle,
             report: Report(planesFound: along.count + across.count,
                            wallsMeasured: result.count,
                            unmeasured: missed)
@@ -283,7 +310,7 @@ enum WallSolver {
 
     /// Длина стены: размах перпендикулярных плоскостей, которые до неё дотягиваются,
     /// обрезанный её собственной видимой частью с запасом на спрятанный угол.
-    private static func extent(of plane: Plane, crossing others: [Plane]) -> Int? {
+    private static func extent(of plane: Plane, crossing others: [Plane]) -> (length: Int, low: Float, high: Float)? {
         let hits = others.filter { other in
             other.lo - reachTolerance <= plane.position
             && plane.position <= other.hi + reachTolerance
@@ -294,6 +321,6 @@ enum WallSolver {
         guard hits.count >= 2, let low = hits.min(), let high = hits.max() else { return nil }
         let length = high - low
         guard length > 0.5 else { return nil }
-        return Int((length * 1000).rounded())
+        return (Int((length * 1000).rounded()), low, high)
     }
 }

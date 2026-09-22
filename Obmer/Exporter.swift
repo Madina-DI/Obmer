@@ -33,6 +33,20 @@ enum Exporter {
         return url
     }
 
+    /// Обмер вместе с ручными уточнениями. Отдельно от дампа CapturedRoom:
+    /// там структура Apple, которую нельзя расширять, а уточнения — наши.
+    @MainActor
+    static func corrections(name: String) throws -> URL? {
+        let items = CorrectionStore.shared.items
+        guard !items.isEmpty else { return nil }
+        let url = directory().appendingPathComponent("\(name)_уточнения.json")
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        encoder.dateEncodingStrategy = .iso8601
+        try encoder.encode(items).write(to: url, options: .atomic)
+        return url
+    }
+
     static func defaultName() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd_HH-mm"

@@ -16,7 +16,11 @@ struct ScanResult: Identifiable, Hashable {
 struct ContentView: View {
 
     @State private var isScanning = false
+    @State private var isMeasuring = false
     @State private var result: ScanResult?
+    /// Отдельный меш под быстрый промер: он не требует обхода, поэтому
+    /// не должен зависеть от того, сканировали ли сегодня вообще.
+    @StateObject private var probeMesh = MeshCapture()
 
     var body: some View {
         NavigationStack {
@@ -30,6 +34,12 @@ struct ContentView: View {
             .navigationTitle("Обмер")
             .navigationDestination(item: $result) { result in
                 ResultsView(room: result.room, mesh: result.mesh)
+            }
+        }
+        .fullScreenCover(isPresented: $isMeasuring) {
+            MeasureScreen(mesh: probeMesh) {
+                isMeasuring = false
+                probeMesh.pause()
             }
         }
         .fullScreenCover(isPresented: $isScanning) {
@@ -73,6 +83,16 @@ struct ContentView: View {
                         .frame(height: 52)
                 }
                 .buttonStyle(.borderedProminent)
+
+                Button {
+                    isMeasuring = true
+                } label: {
+                    Label("Промерить вручную", systemImage: "ruler")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 52)
+                }
+                .buttonStyle(.bordered)
 
                 Text("Снимите шторы с окон и по возможности отодвиньте мебель от стен — закрытые участки приложение достроит предположением.")
                     .font(.footnote)
